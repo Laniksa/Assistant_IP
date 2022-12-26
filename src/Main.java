@@ -1,9 +1,31 @@
+import org.w3c.dom.ls.LSOutput;
+
 import java.util.Scanner;
 public class Main {
+    public static int earnings = 0;//доходы
+    public static int spendings = 0;//расходы
+    public static int taxCalculationEarningMinusSpredings(int earnings, int spendings){
+        int tax = (earnings - spendings)*15/100;
+        if (tax >= 0){
+            return tax;
+        }else{
+            return 0;
+        }
+    }
+    public static int taxCalculationEarnings(int earnings){
+        int tax = earnings*6/100;
+        return tax;
+    }
+    public static void taxBenefits(int earnings, int spendings){
+        if(taxCalculationEarningMinusSpredings(earnings, spendings) <= taxCalculationEarnings(earnings)){
+            System.out.println("Для вас выгоден УСН 15% \n Экономия: "+ (taxCalculationEarnings(earnings)-taxCalculationEarningMinusSpredings(earnings, spendings)));
+        }else{
+            System.out.println("Для вас выгоден УСН 6% \n Экономия: "+(taxCalculationEarningMinusSpredings(earnings,spendings)-taxCalculationEarnings(earnings)));
+        }
+    }
     public static void main(String[] args) {
         Scanner scan = new Scanner (System.in);
-        int earnings = 0;//доходы
-        int spendings = 0;//расходы
+
         while (true) {
             System.out.println("Выберите операцию и введите ее номер: \n 1. Добавить новый доход \n 2. Добавить новый расход \n 3. Выбрать систему налогообложения");
             String str = scan.nextLine();
@@ -25,6 +47,11 @@ public class Main {
                         int inputS = Integer.parseInt(strS);
                         spendings+=inputS;
                         break;
+                    case 3:
+                        System.out.println("Выбрать систему налогооблажения");
+                        taxBenefits(earnings,spendings);
+                    default:
+                        System.out.println("Такой операции не существует");
 
                 }
             }
